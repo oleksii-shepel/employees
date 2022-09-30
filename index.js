@@ -9,7 +9,7 @@ dotenv.config({ path: './config.env' });
 const { Sequelize, DataTypes, Op } = require('sequelize');
 const sequelize = new Sequelize(`postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@postgres:5432/db`)
 
-const Employee = require("employee")(sequelize, DataTypes);
+const Employee = require("./employee")(sequelize, DataTypes);
 
 const seed = async function() {
     console.log('Establishing connection...');
@@ -34,6 +34,9 @@ const seed = async function() {
     $("p.user-text, .js-anim-text").each(function (index, item) {
         descriptions.push($(this).text().replace(/\n/g, ''));
     })
+    
+    console.log(employees);
+    console.log(positions);
 
     await Employee.sync({ force: true });
     

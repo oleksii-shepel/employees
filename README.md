@@ -1,4 +1,4 @@
-## Employees service
+## Employees service (Web Scraping with cheerio)
 
 To start up with the project use docker-compose command in terminal:
 

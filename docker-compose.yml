@@ -17,17 +17,17 @@ services:
       - test-network
 
   pgadmin:
-    image: dpage/pgadmin4:4.23
+    image: dpage/pgadmin4:latest
     environment:
-        PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
-        PGADMIN_DEFAULT_PASSWORD: password
-        PGADMIN_LISTEN_PORT: 80
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_LISTEN_PORT: 80
     ports:
-        - 15432:80
+      - 15432:80
     volumes:
-        - pgadmin:/var/lib/pgadmin
+      - pgadmin:/var/lib/pgadmin
     depends_on:
-        - postgres
+      - postgres
     networks:
       - test-network
 
@@ -36,6 +36,8 @@ services:
     build: ./
     ports:
       - '5000:5000'
+    depends_on:
+      - postgres
     networks:
       - test-network
 

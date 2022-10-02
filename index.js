@@ -3,11 +3,12 @@ const bodyParser = require('body-parser');
 const axios = require("axios");
 const cheerio = require("cheerio");
 const dotenv = require("dotenv");
+const asyncErrors = require('express-async-errors');
 
 dotenv.config({ path: './config.env' });
 
 const { Sequelize, DataTypes, Op } = require('sequelize');
-const sequelize = new Sequelize(`postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@postgres:5432/db`)
+const sequelize = new Sequelize(`postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@postgres:5432/${process.env.POSTGRES_DB}`)
 
 const Employee = require("./employee")(sequelize, DataTypes);
 
@@ -34,9 +35,6 @@ const seed = async function() {
     $("p.user-text, .js-anim-text").each(function (index, item) {
         descriptions.push($(this).text().replace(/\n/g, ''));
     })
-    
-    console.log(employees);
-    console.log(positions);
 
     await Employee.sync({ force: true });
     
@@ -46,8 +44,6 @@ const seed = async function() {
             position: positions[i],
             description: descriptions[i]
         });
-
-        await employee.save();
     }
 }
 
